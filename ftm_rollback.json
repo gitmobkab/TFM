@@ -1,0 +1,12 @@
+{
+    "user": {
+        "name": "",
+        "password": "",
+        "database": ""
+    },
+
+    "generation_settings": {
+        "optimized_generation": false,
+        "default_number_of_lines": 50
+    }
+}
