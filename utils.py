@@ -1,3 +1,5 @@
+DEFAULT_LINES_COUNT = 50
+
 from typing import Literal
 from rich import print as rprint
 import os
@@ -22,11 +24,14 @@ def get_file_ext(file: str) -> str:
 
 
     
-def parse_csv(path, lines: int = 50) -> list[str]:
+def parse_csv(path, lines: int = DEFAULT_LINES_COUNT) -> list[str]:
     with open(path,"r") as file:
         content = file.readlines()
-        # on lit 51 lignes, la première ligne défini les colonnes
-        return content[:lines+1]
+        # on lit n+1 lignes parce que la première ligne défini les colonnes
+        if len(content) >= lines:
+            return content[:lines+1]
+        else:
+            return content
     
 def define_csv_columns(line: str) -> list[str] | None:
     if not line:
