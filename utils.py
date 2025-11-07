@@ -1,5 +1,6 @@
 from typing import Literal
 from rich import print as rprint
+import os
 
 # Will be used for user feedback 
 # EX -> :INFO: PARSING CSV FILES...
@@ -15,8 +16,12 @@ def log(info: str, mode: Literal["info","success","warning","error"]) -> None:
         
 
 
+def get_file_ext(file: str) -> str:
+    file_info = os.path.splitext(file)
+    return file_info[1]
 
 
+    
 def parse_csv(path, lines: int = 50) -> list[str]:
     with open(path,"r") as file:
         content = file.readlines()
