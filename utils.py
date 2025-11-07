@@ -1,3 +1,18 @@
+from typing import Literal
+from rich import print as rprint
+
+# Will be used for user feedback 
+# EX -> :INFO: PARSING CSV FILES...
+def log(info: str, mode: Literal["info","success","warning","error"]) -> None:
+    if mode == "info":
+        rprint(f"[blue bold]:INFO:[/blue bold] {info}")
+    elif mode == "success":
+        rprint(f"[green bold]:SUCCESS:[/green bold] {info}")
+    elif mode == "warning":
+        rprint(f"[orange bold]:WARNING:[/orange bold] {info}")
+    elif mode == "error":
+        rprint(f"[red bold]:ERROR:[/red bold] {info}")
+        
 
 
 
