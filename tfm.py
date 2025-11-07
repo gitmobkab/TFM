@@ -11,7 +11,7 @@ def generate():
     demo_table.add_column("Id", justify="center", style="blue bold")
     demo_table.add_column("full Name", justify="center", style="dark_blue bold")
     demo_table.add_column("Meeting Date", justify="center", style="navy_blue bold")
-    demo_table.add_column("Email", justify="center", style="blue")
+    demo_table.add_column("Email", justify="center", style="blue link https://github.com/gitmobkab/TFM")
     demo_table.add_column("gay", justify="center", style="red bold")
     
     for i in range(50):
