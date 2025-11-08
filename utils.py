@@ -1,11 +1,37 @@
-DEFAULT_LINES_COUNT = 50
-
 from typing import Literal
 from rich import print as rprint
 import os
+from rich.console import Console
+from rich.table import Table
+
+DEFAULT_LINES_COUNT = 50
+
 
 # Will be used for user feedback 
 # EX -> :INFO: PARSING CSV FILES...
+def preview_data(columns: list[str],data: list[str]):
+    
+    data_len = len(data[1:])
+    if data_len < 15:
+        size = data_len
+    else:
+        size = 15
+    
+    table = Table(title="preview_table.tfm", caption=f"--- {size} lines ---")
+    console = Console()
+    
+    table.add_column("Line", justify="center", style="blue bold") # set up special column for line number display
+    
+    for column in columns:
+        table.add_column(column,justify="center")  
+        
+    for i in range(size):
+        table.add_row(
+            str(i+1), *data[i].split(",")
+        )  
+    console.print(table)
+    
+
 def log(info: str, mode: Literal["info","success","warning","error"]) -> None:
     if mode == "info":
         rprint(f"[blue bold]:INFO:[/blue bold] {info}")
