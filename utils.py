@@ -17,7 +17,17 @@ def load_config(config_path):
             "password": "",
             "database": "",
             "table": ""
+        },
+        
+        "generation":{
+            "optimized": False,
+            "rows": 50
+        },
+        
+        "parse":{
+            "rows": 50
         }
+            
     }
     return empty_config 
 
