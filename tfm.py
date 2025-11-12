@@ -1,11 +1,15 @@
 import typer,faker,os
 from rich.console import Console
 from rich.table import Table
-from typing import Literal
 from utils import *
+from pathlib import Path
 
 app = typer.Typer()
 fake = faker.Faker()
+APP_DIR = typer.get_app_dir("TFM") # change if the app name change (actual: "TFM")
+PATH_TO_CONFIG: Path = Path(APP_DIR) / "config.json" # Trust me...
+
+CONFIG = load_config(PATH_TO_CONFIG)
 
 @app.command()
 def generate():
@@ -34,10 +38,10 @@ def cry(text: str):
         
 
 @app.command()
-def parse(file: str, user: str = "", password: str = "", database: str = "", table: str = "", rows: int = DEFAULT_LINES_COUNT):
+def parse(file: str, user: str = CONFIG["user"]["name"] , password: str = CONFIG["user"]["password"], database: str = CONFIG["user"]["database"], table: str = CONFIG["user"]["table"], rows: int = CONFIG["parse"]["rows"]):
     
     # because each commands are heavy to run, it's a good practice to try to stop the execution as soon as possible
-    if not os.path.isfile(file):
+    if not os.path.isfile(file): 
         log("The provided path is not a file or doesn't exit. Exiting...", "error")
         raise typer.Exit(1)
     
