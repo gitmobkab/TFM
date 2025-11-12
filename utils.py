@@ -1,11 +1,25 @@
 from typing import Literal
 from rich import print as rprint
-import os
+import os,json,typer
 from rich.console import Console
 from rich.table import Table
 
 DEFAULT_LINES_COUNT = 50
 
+def load_config(config_path):
+    if os.path.isfile(config_path) :
+        with open(config_path,"r") as file:
+            return json.load(file)
+    
+    empty_config = {
+        "user": {
+            "name": "",
+            "password": "",
+            "database": "",
+            "table": ""
+        }
+    }
+    return empty_config 
 
 # Will be used for user feedback 
 # EX -> :INFO: PARSING CSV FILES...
@@ -73,8 +87,3 @@ def define_csv_columns(line: str) -> list[str] | None:
         clean_words.append(clean_word)
             
     return clean_words
-
-
-    
-    
-    
