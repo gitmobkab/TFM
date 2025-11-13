@@ -1,6 +1,6 @@
 from typing import Literal
 from rich import print as rprint
-import os,json,typer
+import os,json,mariadb,sys
 from rich.console import Console
 from rich.table import Table
 
@@ -109,3 +109,32 @@ def gen_query_placeholder(length: int = 1) -> str:
     placeholder_str = ",".join(placeholder)
     
     return placeholder_str
+
+def run_db_table_filling(**conn_params):
+    conn = None
+    cursor = None
+    
+    try:
+        log("Connecting to MariaDB/MySQL...", "info")
+        conn = mariadb.connect(**conn_params)
+        log("Connection successfull !", "success")
+        
+        cursor = conn.cursor()
+        
+        # filling operations there
+        
+        
+    except Exception as error:
+        log(f"The Following error occured: {error}", "error")
+        sys.exit(1)
+        
+    finally:
+        if cursor:
+            cursor.close()
+            log("Cursor closed !", "info")
+        
+        if conn:
+            conn.close()
+            log("Connection closed !", "info")
+        
+        rprint("[bold green] Bye ![/bold green]")
