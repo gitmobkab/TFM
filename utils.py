@@ -16,7 +16,9 @@ def load_config(config_path):
             "name": "",
             "password": "",
             "database": "",
-            "table": ""
+            "table": "",
+            "host": "localhost",
+            "port": 3306
         },
         
         "generation":{
