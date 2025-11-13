@@ -54,6 +54,10 @@ def parse(file: str, user: str = CONFIG["user"]["name"] , password: str = CONFIG
     file_content = parse_csv(file, rows)
     columns_names = define_csv_columns(file_content[0])
     
+    if columns_names == None:
+        log("Unavlid CSV file, first line of file is empty", "error")
+        raise typer.Abort()
+    
     preview_data(columns_names, file_content[1:])
     
     
