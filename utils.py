@@ -99,3 +99,13 @@ def define_csv_columns(line: str) -> list[str] | None:
         clean_words.append(clean_word)
             
     return clean_words
+
+
+def gen_query_placeholder(length: int = 1) -> str:
+    # use multiplication on the tuple ("?",) <length> times then turn the tuple into a valid string with join
+
+    placeholder = ("?",) * length # multiplication Ex: ("?",) * 3 = ("?", "?", "?")
+    
+    placeholder_str = ",".join(placeholder)
+    
+    return placeholder_str

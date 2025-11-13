@@ -10,6 +10,7 @@ from utils import * # I know a shortcut bro, trust.
 def test_define_csv_columns(line, expected):
     output = define_csv_columns(line)
     assert output == expected
+
     
 @pytest.mark.parametrize("file_path, expected_ext",[
     ("/home/mob/TFM/students.csv",".csv"),
@@ -20,3 +21,13 @@ def test_define_csv_columns(line, expected):
 def test_get_file_ext(file_path, expected_ext):
     output = get_file_ext(file_path)
     assert output == expected_ext
+    
+@pytest.mark.parametrize("length, expected",[
+    (1,"?"),
+    (10, "?,?,?,?,?,?,?,?,?,?"),
+    (0,""),
+    (-1,"")
+])
+def test_gen_query_placeholder(length, expected):
+    output_str = gen_query_placeholder(length)
+    assert output_str == expected
