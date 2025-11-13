@@ -2,7 +2,9 @@
     "user": {
         "name": "",
         "password": "",
-        "database": ""
+        "database": "",
+        "host": "localhost",
+        "port": "3306"
     },
 
     "generation": {
