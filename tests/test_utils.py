@@ -41,3 +41,26 @@ def test_gen_query_placeholder(length, expected):
 def test_make_column_str(columns, expected_string):
     output = make_columns_str(columns)
     assert output == expected_string
+    
+@pytest.mark.parametrize("content, query_data",[
+    (["Hello,World", "World"],
+     
+     [
+         ("Hello", "World"), ("World",)
+      ]
+    ),
+    
+    (["Speudo, age, job", "Mob, 20, crying and complaining", "LIX,36,handle all the marasses"],
+     [
+         ("Speudo", " age", " job"),
+         ("Mob", " 20", " crying and complaining"),
+         ("LIX", "36", "handle all the marasses")
+     ]
+     ),
+    ([""], [
+        ("",)
+    ])
+])
+def test_convert_to_query_data(content,query_data):
+    output = convert_to_query_data(content)
+    assert output == query_data

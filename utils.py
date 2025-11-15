@@ -139,6 +139,13 @@ def mariadb_fill_table(conn_obj: mariadb.Connection , cursor_obj: mariadb.Cursor
         log(f"Error Inserting Data: {error}","error")
         conn_obj.rollback()     
         
+        
+def convert_to_query_data(content: list[str]) -> list[tuple]:
+    final_data = []
+    for line in content:
+        words = line.split(",")
+        final_data.append(tuple(words))
+    return final_data
 
 def run_db_table_filling(data : list[tuple],**conn_params):
     conn = None
