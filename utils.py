@@ -116,8 +116,31 @@ def make_columns_str(columns: list[str]) -> str:
     
     return ",".join(columns)
 
+def mariadb_fill_table(conn_obj: mariadb.Connection , cursor_obj: mariadb.Cursor, table: str, columns : list[str], values: list[tuple[str]]):
+    if not columns:
+        log("Can't make INSERT INTO query without at least one column","error")
+        sys.exit(1)
+    
+    query_placeholder = gen_query_placeholder(len(columns))
+    columns_str = make_columns_str(columns)
+    insert_query = f"INSERT INTO {table} ({columns_str}) VALUES ({query_placeholder})"
+    
+    log("Inserting Data...","info")
+    try:
+        cursor_obj.executemany(insert_query, values)
+        conn_obj.commit()
+        log("Inserting Data... Done", "success")
+        log(f"Inserted {cursor_obj.rowcount} rows", "success")
+        log(f"Last inserted ID: {cursor_obj.lastrowid}", "info")
+    except mariadb.IntegrityError as error:
+        log(f"Error Inserting Data (might be due to duplicate for a unique type column): {error}", "error")
+        conn_obj.rollback()
+    except mariadb.Error as error:
+        log(f"Error Inserting Data: {error}","error")
+        conn_obj.rollback()     
+        
 
-def run_db_table_filling(**conn_params):
+def run_db_table_filling(data : list[tuple],**conn_params):
     conn = None
     cursor = None
     
@@ -129,7 +152,7 @@ def run_db_table_filling(**conn_params):
         cursor = conn.cursor()
         
         # filling operations there
-        
+        mariadb_fill_table(conn, cursor, conn_params["table_name"],conn_params["columns"],data)
         
     except Exception as error:
         log(f"The Following error occured: {error}", "error")

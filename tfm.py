@@ -63,7 +63,9 @@ def parse(file: str, user: str = CONFIG["user"]["name"] , password: str = CONFIG
     run_db_table_filling(username=user,
                          passwd=password,
                          db=database,
-                         host="localhost")
+                         host="localhost",
+                         table_name=table,
+                         columns=columns_names)
     
     
     
