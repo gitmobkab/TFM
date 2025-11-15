@@ -60,12 +60,15 @@ def parse(file: str, user: str = CONFIG["user"]["name"] , password: str = CONFIG
     
     preview_data(columns_names, file_content[1:])
     
+    query_data = convert_to_query_data(file_content[1:])
+    
     run_db_table_filling(username=user,
                          passwd=password,
                          db=database,
                          host="localhost",
                          table_name=table,
-                         columns=columns_names)
+                         columns=columns_names,
+                         data=query_data)
     
     
     

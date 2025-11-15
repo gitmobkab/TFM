@@ -147,9 +147,15 @@ def convert_to_query_data(content: list[str]) -> list[tuple]:
         final_data.append(tuple(words))
     return final_data
 
-def run_db_table_filling(data : list[tuple],**conn_params):
+def run_db_table_filling(**conn_params):
     conn = None
     cursor = None
+    
+    # take out the tfm specific parameters to avoid mariadb from catching them 
+    # and throwing an error at us
+    table_name = conn_params.pop("table_name")
+    columns = conn_params.pop("columns")
+    data = conn_params.pop("data")
     
     try:
         log("Connecting to MariaDB/MySQL...", "info")
@@ -159,7 +165,7 @@ def run_db_table_filling(data : list[tuple],**conn_params):
         cursor = conn.cursor()
         
         # filling operations there
-        mariadb_fill_table(conn, cursor, conn_params["table_name"],conn_params["columns"],data)
+        mariadb_fill_table(conn, cursor, table_name, columns ,data)
         
     except Exception as error:
         log(f"The Following error occured: {error}", "error")
