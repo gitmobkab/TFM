@@ -31,3 +31,13 @@ def test_get_file_ext(file_path, expected_ext):
 def test_gen_query_placeholder(length, expected):
     output_str = gen_query_placeholder(length)
     assert output_str == expected
+    
+@pytest.mark.parametrize("columns, expected_string",[
+    (["first_name","last_name","age"], "first_name,last_name,age"),
+    (["name ", "address"], "name ,address"),
+    (["name", "age", ""], "name,age,"),
+    ([], ""),
+])
+def test_make_column_str(columns, expected_string):
+    output = make_columns_str(columns)
+    assert output == expected_string

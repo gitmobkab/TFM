@@ -110,6 +110,13 @@ def gen_query_placeholder(length: int = 1) -> str:
     
     return placeholder_str
 
+def make_columns_str(columns: list[str]) -> str:
+    if not columns:
+        return ""
+    
+    return ",".join(columns)
+
+
 def run_db_table_filling(**conn_params):
     conn = None
     cursor = None
