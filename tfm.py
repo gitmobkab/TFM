@@ -41,6 +41,15 @@ def cry(text: str):
 def parse(file: str, user: str = CONFIG["user"]["name"] , password: str = CONFIG["user"]["password"], database: str = CONFIG["user"]["database"], table: str = CONFIG["user"]["table"], rows: int = CONFIG["parse"]["rows"]):
     
     # because each commands are heavy to run, it's a good practice to try to stop the execution as soon as possible
+    if not user: 
+        log("the provided username is not valid (empty)","warning")
+    if not database.strip() :
+        log("the database name is not valid (empty/contains whitespace characters only), Aborting...","error")
+        typer.Abort()
+    if not table.strip():
+        log("the table name is not valid (empty/contains whitespace characters only), Aborting", "error")
+        typer.Abort()
+    
     if not os.path.isfile(file): 
         log("The provided path is not a file or doesn't exit. Exiting...", "error")
         raise typer.Exit(1)
